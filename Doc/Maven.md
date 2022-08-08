@@ -253,7 +253,7 @@ https://maven.apache.org/ref/3.8.6/maven-model/maven.html
 
 ### 依赖查找顺序
 
-> local_repo > settings_profile_repo > pom_profile_repo > pom_repositories > settings_mirror > central
+> 本地模块 > local_repo > settings_profile_repo > pom_profile_repo > pom_repositories > settings_mirror > central
 
 ### 修改为阿里云仓库
 
