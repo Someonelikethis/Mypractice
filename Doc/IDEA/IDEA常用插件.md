@@ -14,3 +14,8 @@ CamelCase
 
 GsonFormat
 
+Translation
+
+arthas
+
+git commit template
