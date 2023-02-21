@@ -1,5 +1,5 @@
 
-####List 有序，可重复，如果List元素允许为null，则可以有多个null
+#### List 有序，可重复，如果List元素允许为null，则可以有多个null
 
 LinkedList 双向链表实现的双端队列，允许null，线程不安全
 
@@ -11,7 +11,7 @@ ArrayList  线程不安全，容量默认1.5自增，不可指定容量增长，
 
 `List list = Collections.synchronizedList(new ArrayList(...)); `
 
-#####List选择：
+##### List选择：
 
 在不考虑线程安全，确定容量，查找操作频繁于插入删除操作，选用ArrayList
 
@@ -22,11 +22,11 @@ ArrayList  线程不安全，容量默认1.5自增，不可指定容量增长，
 
 NavigableMap和NavigableSet扩展了SortedSet添加了各种导航方法
 
-####Map 具有映射关系的键值对，key不可重复，注意可变对象作为key，三个集合视图：keys的set、values的collection、key-value mappings（Entry）的set
+#### Map 具有映射关系的键值对，key不可重复，注意可变对象作为key，三个集合视图：keys的set、values的collection、key-value mappings（Entry）的set
 
     key可以有一个null，value可以null
 
-#####HashMap  无序，基于数组、单链表、红黑树，key和value允许null
+##### HashMap  无序，基于数组、单链表、红黑树，key和value允许null
 
      根据key的hash值去存取元素，当key的hash值相同时，此时即发生了hash碰撞，equals方法碰撞时才会执行，
           
@@ -54,10 +54,10 @@ NavigableMap和NavigableSet扩展了SortedSet添加了各种导航方法
      
      HashMap和HashTable几乎等同，最大的区别在于HashTable线程安全（靠synchronized关键字）且HashTable的key不能为null，HashTable现在基本不使用了，因为有更好的选择
 
-#####ConcurrentHashMap  
+##### ConcurrentHashMap  
      使用分段锁，相比HashTable锁粒度更小，有更好的并发性，但同时增加了系统开销，每一个Segment相当于一个小的HashTable
 
-#####TreeMap 基于红黑树，有序
+##### TreeMap 基于红黑树，有序
      
      有自然顺序、自定义顺序（自定义比较器）两种，其中默认为自然排序
      
@@ -81,18 +81,18 @@ LinkedHashMap 有序，迭代顺序可以是插入顺序，也可以是访问顺
            
      如果模块接受输入的Map并复制它，然后返回由复制的顺序决定的结果，那么这种技术特别有用。(客户通常很喜欢按照展示物品的顺序退货。)
 
-####Set 无序，不可重复，最多只能由一个元素为null，注意可变对象作为set元素
+#### Set 无序，不可重复，最多只能由一个元素为null，注意可变对象作为set元素
 
-#####HashSet  基于HashMap，允许null，线程不安全，不过只使用了HashMap的key，将元素存储在key上
+##### HashSet  基于HashMap，允许null，线程不安全，不过只使用了HashMap的key，将元素存储在key上
      Collections.synchronizedSet(new HashSet(...));
     
-#####TreeSet  基于TreeMap，不过只使用了HashMap的key，将元素存储在key上，
+##### TreeSet  基于TreeMap，不过只使用了HashMap的key，将元素存储在key上，
               有序，有自然顺序、自定义顺序（自定义比较器）两种，其中默认为自然排序
     
-#####LinkedHashSet  基于LinkedHashMap
+##### LinkedHashSet  基于LinkedHashMap
 
 
-####补充：
+#### 补充：
 
 Comparator中    (Comparator & Serializable)创建的对象同时实现这两个接口
 

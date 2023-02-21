@@ -1,6 +1,6 @@
 https://blog.csdn.net/sinat_38259539/article/details/71799078
 
-#获得Class对象的三种方法
+# 获得Class对象的三种方法
 
 ①Object的getClass方法
 
@@ -14,7 +14,7 @@ https://blog.csdn.net/sinat_38259539/article/details/71799078
 第一种对象都有了还反射干啥
 第二种需要导入类的包，依赖太强，不导包就抛编译错误
 
-#反射main方法
+# 反射main方法
 通过反射main方法，可以在一个类的main方法中使用另一个类的main方法
 
 

@@ -1,4 +1,4 @@
-####拦截器
+#### 拦截器
     拦截器是 AOP 编程思想的典型应用
     
     Spring中要求处理器(Controller)的拦截器都要实现接口HandlerInterceptor
@@ -7,7 +7,7 @@
     afterCompletion    无论是否产生异常都会在渲染视图后执行的方法
     
    ![](拦截流程.png)
-####SpringMVC的Interceptor与Servlet的Filter
+#### SpringMVC的Interceptor与Servlet的Filter
 
     拦截器和过滤器执行顺序：
     1、Filter.init();

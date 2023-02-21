@@ -148,7 +148,7 @@ docker image pull library/hello-world
 libary是image文件所在的组，hello-world是image文件名
 libary是Docker官方仓库的默认组，可省去
 
-查看本机image文件    docker images
+查看本机image文件    docker images   --no-trunc 显示完整描述    
 
 删除image文件   docker rmi     -f表示强制删除
 
@@ -170,6 +170,8 @@ run参数：
 使用Dockerfile创建镜像
 docker build   
 可对cpu、内存等进行限制
+
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]  指定容器tag
 ```
 
 #### 容器相关命令
@@ -177,7 +179,9 @@ docker build
 ```bash
 列出本机正在运行的容器   docker ps
 
-列出所有容器，包括停止运行的   docker ps -a
+列出所有容器,包括停止运行的   -a
+
+显示完整描述    --no-trunc
 
 docker inspect [容器名]   查看容器详情
 
@@ -333,3 +337,17 @@ Docker源生的集群管理工具
 比较成熟的容器集群管理工具：Google的K8s和Appache的Mesos
 
 ## Docker数据管理
+
+
+
+
+## 常用指令
+```
+cd /data/release/20221210
+docker cp ./libs 5571842d72e8:/usr/share/jitsi-meet
+docker commit 5571842d72e8 jitsi/web:2.0.7577
+
+docker exec -it 5571842d72e8 /bin/bash
+cd /usr/share/jitsi-meet/libs
+```
+

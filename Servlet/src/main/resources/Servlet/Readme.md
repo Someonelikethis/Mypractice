@@ -1,4 +1,4 @@
-####Servlet（Server Applet）(Java Servlet)
+#### Servlet（Server Applet）(Java Servlet)
 [详解](https://blog.csdn.net/qq_19782019/article/details/80292110)
 
     用Java编写的服务器端程序，是在服务器上运行的小程序，Servlet对Server就如同Applet对Client一样。
@@ -24,7 +24,7 @@
     Servlet想要使用，必须配置
     Servlet2.5：web.xml
     Servlet3.0: @Servlet
-####Servlet生命周期
+#### Servlet生命周期
     Servlet通过调用 init () 方法进行初始化。
     Servlet调用 service() 方法来处理客户端的请求。
     Servlet通过调用 destroy() 方法终止（结束）。
@@ -45,20 +45,20 @@
     在调用destroy()方法之后，Servlet对象被标记为垃圾回收。
     
    ![](Servlet生命周期流程图.png)
-####Servlet工作流程
+#### Servlet工作流程
    ![](Servlet工作流程.png)
-####创建Servlet的三种方式
+#### 创建Servlet的三种方式
     ①实现Servlet接口
     ②继承GenericServlet
     ③继承HttpServlet(最常用，一般用这个)
-####[Filter过滤器](https://www.runoob.com/servlet/servlet-writing-filters.html)
+#### [Filter过滤器](https://www.runoob.com/servlet/servlet-writing-filters.html)
     Servlet 过滤器可以动态地拦截请求和响应，以变换或使用包含在请求或响应中的信息。
     Filter的执行顺序与在web.xml配置文件中filter-mapping的配置顺序一致，一般把Filter配置在所有的Servlet之前。
-####[Servlet异常处理](https://www.runoob.com/servlet/servlet-exception-handling.html)
-####Servlet容器(即Web服务器)——Tomcat
+#### [Servlet异常处理](https://www.runoob.com/servlet/servlet-exception-handling.html)
+#### Servlet容器(即Web服务器)——Tomcat
 
 
-####web.xml加载过程
+#### web.xml加载过程
     ①Servlet容器先读取两个节点<listener>和<contex-param>
     ②容器创建一个ServletContext，应用范围内即整个WEB项目
     ③容器读取到<context-param>转化为键值对,存入ServletContext。
@@ -71,30 +71,30 @@
     如果web.xml中出现了相同的元素，则按照在配置文件中出现的先后顺序来加载。
     
     Spring web中，WebApplicationContext在监听器ContextLoaderListener的contextInitialized方法中被创建，在contextDestroyed方法中被销毁
-####ServletContext
+#### ServletContext
     ServletContext就是一个“域对象”，它存在于整个应用中，并在在整个应用中有且仅有1份，它表示了当前整个应用的
     “状态”，可以理解为某个时刻的ServletContext代表了这个应用在某个时刻的“一张快照”，这张“快照”里面包
     含了有关应用的许多信息，应用的所有组件都可以从ServletContext获取当前应用的状态信息。ServletContext随着程序
     的启动而创建，随着程序的停止而销毁。
-####Servlet3.0
+#### Servlet3.0
     基于注解
     允许动态加载Servlet，需实现ServletContainerInitializer接口
     允许不使用web.xml
-####request的parameter和attribute
+#### request的parameter和attribute
     parameter是客户端传过来的请求参数，不是头信息，可以是url里面的，也可以是body里面的
     attribute是request对象的内部属性(域)，是每个request独有的，用于服务器端内部组件(servlet、jsp等)的传值，对attribute的操作是服务器的行为
-####请求转发和请求重定向
+#### 请求转发和请求重定向
     请求转发是服务器去调用另外一个web资源
     重定向是浏览器去访问另外一个web资源
-####HttpServletRequest和HttpServletResponse
-#####HttpServletRequest
+#### HttpServletRequest和HttpServletResponse
+##### HttpServletRequest
     封装了Http请求内容(请求行、请求头、请求体)
     1.获取客户机信息
     2.获取请求行、请求头
     3.获取请求参数、请求体
     4.请求转发(forward)/包含(include)
     5.请求域 Attribute
-#####HttpServletResponse
+##### HttpServletResponse
     1.设置响应头
     2.设置响应状态码
     3.写响应正文

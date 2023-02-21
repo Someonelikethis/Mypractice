@@ -1,4 +1,4 @@
-###存储过程
+### 存储过程
     一组为了完成特定功能的SQL语句集(包括增删改查、条件语句、循环语句等)
     
     语法(MySQL)：
@@ -35,7 +35,7 @@
         商业逻辑要求聚合多种格式、多个来源的数据，并且要进行数据适配，这种工作适合放在中间层而不是数据库里实现
         数据库集群，实现各数据库Server端存储过程代码变更同步，很麻烦
 
-###事务
+### 事务
     由有限的数据库操作序列组成的逻辑执行单元，这系列操作要么全部执行，要么全部放弃执行。
     ACID——原子性(Atomicity)、一致性(Consistenecy)、隔离性(Isolation)、持久性(Durability)
     数据库事务中，包含一组DML语句，DDL和DCL语句最多只能有一条，因为DDL和DCL语句会导致事务立即提交。
@@ -56,7 +56,7 @@
     
 
 
-###SQL语句分类：
+### SQL语句分类：
     DML(Data Manipulation Language,数据操作语言) insert、update、delete
     DDL(Data Definition Language,数据定义语言) create、alter、drop、truncate(截断)
     DCL(Data Control Language,数据控制语言) grant、revoke
@@ -64,11 +64,11 @@
 
     SQL语句的关键字不区分大小写
 
-###truncate关键字——截断某个表
+### truncate关键字——截断某个表
     删除该表里的全部数据，但保留表结构，比delete更快
     使用：truncate 表名
 
-###JDBC常用接口和类
+### JDBC常用接口和类
     DriverManager   用于管理JDBC驱动的服务类，主要用于获取Connection对象
     Connection      代表数据库连接对象，每个Connection代表一个物理连接会话
     Statement(不允许使用占位符?)       用于执行SQL语句的工具接口
@@ -83,7 +83,7 @@
     
     ResultSet       结果集对象，在逻辑结构上类似于一个表
 
-###JDBC编程步骤：
+### JDBC编程步骤：
     ①加载数据库驱动
     ②通过DriverManager获取数据库连接
     ③通过Connection对象创建Statement对象(createStatement(),prepareStatement(),prepareCall())
@@ -91,19 +91,19 @@
     ⑤操作结果集
     ⑥回收数据库资源(所有用到的资源，包括Connection、Statement、ResultSet)
 
-###正确关闭数据库资源的姿势：
+### 正确关闭数据库资源的姿势：
     ①手动逐一关闭所有资源
     ②利用try(...)的自动关闭
-###资源池
+### 资源池
     资源池是对于共享资源的情况的一种通用设计模式，用于解决资源的频繁请求、释放所造成的性能下降
-###数据库连接池
+### 数据库连接池
     解决方案：当应用程序启动时，系统主动建立足够多的的数据库连接，组成一个连接池。每当应用程序请求数据库连接时，从连接池中取出已有的连接，用完后归还给连接池
     数据库连接池是Connection对象的工厂
     常用参数：初始连接数、最大连接数、最小连接数、连接池每次增加的容量
-###数据源(DataSource)
+### 数据源(DataSource)
     包含数据库连接池和连接池管理两部分
     习惯上常把DataSource称为连接池
-###两种开源的数据源实现——DBCP和C3P0
+### 两种开源的数据源实现——DBCP和C3P0
     DBCP：Tomcat的连接池
     C3PO：Hibernate推荐该连接池
     C3PO连接池比DBCP性能更好，自动清理不再使用的Connection、Statement、ResultSet

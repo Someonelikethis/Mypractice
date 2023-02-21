@@ -72,7 +72,7 @@
 |将本地的[branch-name]分支推送到[remote-name]主机的[branch-name]分支。如果[branch-name]不存在，则会被新建.|
 
 
-####解决git国内下载慢的问题
+#### 解决git国内下载慢的问题
     修改host文件         路径：C:\Windows\System32\drivers\etc
     
     添加：

@@ -27,13 +27,13 @@
 
 ​	java -version
 
-###运行jar
+### 运行jar
 nohup java -jar helloworld-0.0.1.jar >out.txt &           nohup后台启动   
 //这种方法会把日志文件输入到你指定的文件中，没有则会自动创建。进程会在后台运行。
-####对nohup: ignoring input and redirecting stderr to stdout的解释
+#### 对nohup: ignoring input and redirecting stderr to stdout的解释
 翻译：忽略输入，重定向标准错误到标准输出
 如果不想看到这个提示，可以添加  2>&1  改为如下
 nohup java -jar helloworld-0.0.1.jar >out.txt 2>&1 &      
 2代表标准错误，1代表标准输出，0代表标准输入，2>&1代表将标准输出重定向到标准输出中
-###停止jar
+### 停止jar
 kill -9 pid

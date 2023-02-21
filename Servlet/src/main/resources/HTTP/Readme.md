@@ -1,6 +1,6 @@
-####HTTP
+#### HTTP
     HTTP是一个无状态的面向连接的协议
-####URL、URI、URN
+#### URL、URI、URN
     URL  统一资源定位符
     URL的编码格式采用的是ASCII码，所有非ASCII字符均需要编码再传输
     
@@ -9,7 +9,7 @@
     URN  统一资源名称
     
     URI是包含URL、URN，即URL、URN是URI的子集
-####Http请求和Http响应
+#### Http请求和Http响应
     Http请求
     <request line>
     <headers>
@@ -34,7 +34,7 @@
    ![](图解http请求.png)
    
    ![](图解http响应.png)
-####[GET和POST的区别](https://blog.csdn.net/gideal_wang/article/details/4316691)
+#### [GET和POST的区别](https://blog.csdn.net/gideal_wang/article/details/4316691)
 [GET和POST比较](https://www.w3school.com.cn/tags/html_ref_httpmethods.asp)
 
     GET一般用于获取/查询资源信息，而POST一般用于更新资源信息，这是HTTP规范，但实际做的时候很多人
@@ -68,7 +68,7 @@
                  POST：一般服务器会限制
                  通常GET比POST能传输的数据要小很多
     GET和POST请求参数都是键值对
-####Restful API
+#### Restful API
 [详解1](https://blog.csdn.net/hjc1984117/article/details/77334616)
 [详解2](https://blog.csdn.net/qq_21383435/article/details/80032375)
 
@@ -83,9 +83,9 @@
     DELETE（DELETE）：从服务器删除资源。//删
     
     url中没有动词
-####Web服务器
+#### Web服务器
    ![](Web服务器工作原理.png)
-####一段发展史
+#### 一段发展史
     这一切的根源：Http协议是无状态的。
     
     最早Web上基本都是文档浏览，服务器不需要保留请求的任何记录(是谁发出的请求、请求时间、请求次数、干了什么等信息)(同时这也是Http无状态造成的)。
@@ -107,10 +107,10 @@
     为了解决多服务器、节省服务器空间、不支持Cookie等问题，出现了Token机制，将用户信息保存在Token中，服务器通过验证签名来判断是不是自己颁发的令牌。
     这样服务器不需要存储id通过比对来进行判断，而是通过算法计算签名，比对签名来进行判断
     Token一般要加密
-####[Cookie与Session](https://blog.csdn.net/fangaoxin/article/details/6952954)
+#### [Cookie与Session](https://blog.csdn.net/fangaoxin/article/details/6952954)
     HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。
     Cookie和Session是状态机制
-#####Cookie
+##### Cookie
     Cookie存储在客户端
     Cookie机制用来弥补Http协议无状态的不足，在Seesion出来之前，基本上所有的网站都采用Cookie来跟踪会话。
     
@@ -132,7 +132,7 @@
     
     属性maxAge是Cookie失效的时间，单位秒。如果为正数，则该Cookie在maxAge秒之后失效。如果为负数，该Cookie为临时Cookie，
     关闭浏览器即失效，浏览器也不会以任何形式保存该Cookie。如果为0，表示删除该Cookie。默认为–1
-#####Session
+##### Session
     理论上，一个用户的所有请求操作都应该属于同一个会话
     Session对象是在客户端第一次请求服务器的时候创建的。
     Session也是一种key-value的属性对
