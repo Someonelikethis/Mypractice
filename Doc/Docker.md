@@ -4,7 +4,7 @@
 
 [推荐阅读——阮一峰博客](http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
-#### 镜像(Image)
+### 镜像(Image)
 
 可以理解为类
 
@@ -14,7 +14,7 @@ image 是二进制文件
 
 实际开发中，一个 image 文件往往通过继承另一个 image 文件，加上一些个性化设置而生成
 
-#### Container(容器)
+### Container(容器)
 
 可以理解为类实例
 
@@ -24,7 +24,7 @@ image 是二进制文件
 
 容器本身也是一个文件，成为容器文件。关闭容器并不会删除容器文件，只是容器停止运行而已。
 
-#### Repository(仓库)
+### Repository(仓库)
 
 Docker仓库的概念与git类似
 
@@ -38,11 +38,9 @@ Docker仓库的概念与git类似
 
 通过`<仓库名>:<标签>`的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 `latest` 作为默认标签.。
 
+## 安装Docker
 
-
-
-
-## Ubuntu下安装Docker
+### Ubuntu下安装Docker
 
 [参考文档](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1)
 
@@ -112,29 +110,46 @@ sudo vi /etc/default/docker
 DOCKER_OPTS="--registry-mirror=https://registry.docker-cn.com"
 ```
 
-## 常用命令
+### 离线安装Docker
 
-### 服务相关命令
+rpm安装
 
 ```
-启动Docker服务：
+rpm -ivh *.rpm
+```
+
+## 常用命令
+
+### Docker服务常用命令
+
+#### 启动Docker服务
+
+```
 sudo service docker start
-或者
 sudo systemctl start docker
+```
 
-查看服务状态
+#### 查看Docker服务状态
+
+```
 sudo systemctl status docker
+```
 
-重启docker
+#### 重启Docker
+
+```
 sudo service docker restart
+```
 
+#### 设置docker开机自启
 
-
-
-设置docker开机自启
+```
 sudo systemctl enable docker
+```
 
-添加当前用户可执行权限
+#### 添加当前用户可执行权限
+
+```
 sudo usermod -aG docker username
 ```
 
@@ -142,18 +157,35 @@ sudo usermod -aG docker username
 
 #### 镜像相关命令
 
+##### 拉取镜像
+
 ```
-从仓库中抓取镜像到本地   docker pull
-docker image pull library/hello-world
-libary是image文件所在的组，hello-world是image文件名
+docker pull library/hello-world:14.04
+libary是image文件所在的组，hello-world:14.04是image文件名，
 libary是Docker官方仓库的默认组，可省去
+```
 
-查看本机image文件    docker images   --no-trunc 显示完整描述    
+##### 查看本机镜像文件
 
-删除image文件   docker rmi     -f表示强制删除
+```
+docker images   --no-trunc 显示完整描述
+```
 
-搜索仓库中的镜像  docker search
+##### 删除本机镜像文件
 
+```
+docker rmi [容器id]    -f表示强制删除
+```
+
+##### 搜索仓库中的镜像
+
+```
+docker search
+```
+
+##### 运行镜像文件生成容器
+
+```
 运行image文件生成容器   docker run
 docker run具有自动抓取 image 文件的功能。如果发现本地没有指定的 image 文件，就会从仓库自动抓取。
 
@@ -166,41 +198,105 @@ run参数：
 --name  指定容器名称    如果没有指定，将生成随机名称
 --network   指定容器网络
 --restart=always   开机自启
+```
 
-使用Dockerfile创建镜像
-docker build   
-可对cpu、内存等进行限制
+##### 使用Dockerfile创建镜像
 
-docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]  指定容器tag
+```
+docker build   可对cpu、内存等进行限制
+docker build -t (镜像名) (Dockerfile所在目录,其中`.`代表点前目录)
+```
+
+##### 保存镜像
+
+```
+docker save -o (xxx.tar) (镜像名称)
+docker save (镜像名称) > (xxx.tar)
+例如：
+docker save busybox > busybox.tar
+docker save -o busybox.tar busybox
+```
+
+##### 加载镜像
+
+```
+docker load < (xxx.tar)
+docker load -i (xxx.tar)
 ```
 
 #### 容器相关命令
 
+##### 列出本机正在运行的容器
+
+```
+docker ps    -a  列出所有容器,包括停止运行的    --no-trunc  显示完整描述
+```
+
+##### 查看容器详情
+
+```
+docker inspect [容器名] 
+```
+
+##### 终止容器
+
+```
+docker kill  比 docker stop 快
+```
+
+##### 删除容器文件
+
+```
+docker rm
+docker rm -f $(docker ps -aq)  删除全部容器 
+```
+
+##### 进入容器
+
 ```bash
-列出本机正在运行的容器   docker ps
-
-列出所有容器,包括停止运行的   -a
-
-显示完整描述    --no-trunc
-
-docker inspect [容器名]   查看容器详情
-
-终止容器 docker kill  比 docker stop 快
-
-删除容器文件 docker rm
-删除全部容器 docker rm -f $(docker ps -aq)
-
 在运行的容器中执行命令，与运行中的容器进行通信
 docker exec [-itd] [容器名称] 命令
 -d  后台
 -t  伪终端
--i  交互模式，即使没有附加-i，STDIN(标准输入)也保持打开
+-i  交互模式，即使没有附加-i，STDIN(标准输入)也保持打开 
 
-启动容器  docker start
-重启容器  docker restart
+docker exec -it 5571842d72e8 /bin/bash
 ```
 
-## 使用Dockerfile构建镜像
+##### 启动容器
+
+```
+docker start
+```
+
+##### 重启容器
+
+```
+docker restart
+```
+
+##### 指定容器tag
+
+```
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]  
+```
+
+##### 数据拷贝
+
+```
+docker cp ./libs 5571842d72e8:/usr/share/jitsi-meet
+docker cp 5571842d72e8:/usr/share/jitsi-meet ./libs 
+```
+
+##### 从容器创建新镜像
+
+```
+docker commit 5571842d72e8 jitsi/web:2.0.7577
+```
+
+
+
+## Dockerfile构建镜像
 
 创建名为Dockerfile的文件
 
@@ -273,25 +369,6 @@ add <src> <dest>
 env <key> <value>
 env <key>=<value> <key>=<value>
 ```
-### 使用Dockerfile创建镜像
-
-```
-docker build -t (镜像名) (Dockerfile所在目录,其中`.`代表点前目录)
-```
-
-## 保存与加载镜像
-
-```
-docker save -o (xxx.tar) (镜像名称)
-docker save (镜像名称) > (xxx.tar)
-例如：
-docker save busybox > busybox.tar
-docker save -o busybox.tar busybox
-
-docker load < (xxx.tar)
-docker load -i (xxx.tar)
-```
-
 ## Docker镜像管理
 
 DockerHub——Docker官方远程仓库
@@ -338,16 +415,14 @@ Docker源生的集群管理工具
 
 ## Docker数据管理
 
+## Docker Desktop
 
+### 设置镜像仓库
 
+![1680961873808](D:\Project\learn-backend\Doc\Docker.assets\1680961873808.png)
 
-## 常用指令
 ```
-cd /data/release/20221210
-docker cp ./libs 5571842d72e8:/usr/share/jitsi-meet
-docker commit 5571842d72e8 jitsi/web:2.0.7577
-
-docker exec -it 5571842d72e8 /bin/bash
-cd /usr/share/jitsi-meet/libs
+"registry-mirrors":["https://almtd3fa.mirror.aliyuncs.com"]
 ```
 
+### 设置代理
