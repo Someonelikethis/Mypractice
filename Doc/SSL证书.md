@@ -51,3 +51,7 @@ certbot certonly --webroot -w /var/www/hexo -d www.lizhanxu.com -m 934035362@qq.
             location = /50x.html {
         }
     }
+
+### 判断CNAME是否添加成功
+
+![1681465795220](D:\Project\learn-backend\Doc\SSL证书.assets\1681465795220.png)

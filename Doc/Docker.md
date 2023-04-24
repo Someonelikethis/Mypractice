@@ -224,6 +224,12 @@ docker load < (xxx.tar)
 docker load -i (xxx.tar)
 ```
 
+##### 指定镜像tag
+
+```
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+```
+
 #### 容器相关命令
 
 ##### 列出本机正在运行的容器
@@ -275,12 +281,6 @@ docker start
 docker restart
 ```
 
-##### 指定容器tag
-
-```
-docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]  
-```
-
 ##### 数据拷贝
 
 ```
@@ -293,8 +293,6 @@ docker cp 5571842d72e8:/usr/share/jitsi-meet ./libs
 ```
 docker commit 5571842d72e8 jitsi/web:2.0.7577
 ```
-
-
 
 ## Dockerfile构建镜像
 
