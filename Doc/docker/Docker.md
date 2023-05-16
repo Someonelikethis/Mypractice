@@ -417,7 +417,7 @@ Docker源生的集群管理工具
 
 ### 设置镜像仓库
 
-![1680961873808](D:\Project\learn-backend\Doc\Docker.assets\1680961873808.png)
+![1680961873808](Docker.assets/1680961873808.png)
 
 ```
 "registry-mirrors":["https://almtd3fa.mirror.aliyuncs.com"]
