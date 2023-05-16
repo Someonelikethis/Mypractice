@@ -13,5 +13,13 @@ ls
 
 ```
 ifconfig
+
+eth0
+```
+
+### 查看端口占用
+
+```
+netstat -anp | grep 8080
 ```
 
