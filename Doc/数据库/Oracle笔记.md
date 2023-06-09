@@ -40,6 +40,12 @@ create synonym sys_user from fschat.sys_user;
 
 
 
+查询用户表空间名称
+
+```
+select default_tablespace from dba_users where username='登录用户';
+```
+
 
 
 

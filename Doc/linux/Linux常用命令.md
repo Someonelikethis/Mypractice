@@ -23,7 +23,7 @@ tar -zcvf
 tar -zxvf
 ```
 
-### 查看网络情况
+## 查看网络情况
 
 ```
 ip address
@@ -55,9 +55,18 @@ put -r aaa
 get -r aaa
 ```
 
-### 查看端口占用
+## 查看端口占用
 
 ```
 netstat -anp | grep 8080
+```
+
+## du
+
+```
+查询当前目录总大小
+du -sh
+查看当前目录下各文件、文件夹的大小
+du -h --max-depth=1
 ```
 
