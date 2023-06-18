@@ -48,6 +48,14 @@ select default_tablespace from dba_users where username='登录用户';
 
 
 
+修改用户密码
+
+```
+// 登录dba
+sqlplus / as sysdba;
+alter user 用户名 identified by 新密码;
+```
+
 
 
 
