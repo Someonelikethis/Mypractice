@@ -28,6 +28,8 @@ grant select on fschat.sys_user to qyyp;
 grant create synonym to qyyp;
 // 解除用户表空间限额
 grant unlimited tablespace to fschat;
+// 授权用户权限
+grant connect,resource to fschat;
 ```
 
 
@@ -57,6 +59,13 @@ alter user 用户名 identified by 新密码;
 ```
 
 
+
+创建用户
+
+```
+create user fschat_tmp identified by Fschat123;
+grant connect,resource to fschat_tmp;
+```
 
 
 
