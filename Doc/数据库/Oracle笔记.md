@@ -19,7 +19,7 @@ startup
 
 授权
 
-```
+```sql
 // 授权用户dba权限
 grant dba to cw;
 // 授权某表查询权限给某用户
@@ -30,13 +30,15 @@ grant create synonym to qyyp;
 grant unlimited tablespace to fschat;
 // 授权用户权限
 grant connect,resource to fschat;
+// 收回用户权限
+revoke dba from fschat;
 ```
 
 
 
 取别名
 
-```
+```sql
 create synonym sys_user from fschat.sys_user;
 ```
 
@@ -44,7 +46,7 @@ create synonym sys_user from fschat.sys_user;
 
 查询用户表空间名称
 
-```
+```sql
 select default_tablespace from dba_users where username='登录用户';
 ```
 
@@ -52,7 +54,7 @@ select default_tablespace from dba_users where username='登录用户';
 
 修改用户密码
 
-```
+```sql
 // 登录dba
 sqlplus / as sysdba;
 alter user 用户名 identified by 新密码;
@@ -62,10 +64,43 @@ alter user 用户名 identified by 新密码;
 
 创建用户
 
-```
+```sql
 create user fschat_tmp identified by Fschat123;
 grant connect,resource to fschat_tmp;
 ```
 
 
+
+授权并创建视图
+
+```sql
+grant select on sys_dept to qyyp;
+
+create view sys_user as select * from fschat.sys_user;
+```
+
+
+
+查看当前机器及连接数
+
+```sql
+select machine,count(machine) from v$session group by machine;
+```
+
+
+
+查看最大连接数配置
+
+```sql
+select value from v$parameter where name ='processes';
+默认150
+```
+
+
+
+imp导入
+
+```
+imp JNPFINIT/JNPFINIT fromuser=JNPFINIT touser=JNPFINIT rows=y indexes=y commit=y buffer=50000000 ignore=n file=/home/oracle/exp_JNPFINIT.dmp log=/home/oracle/exp_JNPFINIT.log
+```
 

@@ -155,6 +155,12 @@ sudo usermod -aG docker username
 
 ### Docker客户端常用指令
 
+#### 登录镜像仓库
+
+```
+docker login git.xxx.com:9999
+```
+
 #### 镜像相关命令
 
 ##### 拉取镜像
@@ -230,6 +236,19 @@ docker load -i (xxx.tar)
 docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
 ```
 
+##### 清理镜像
+
+https://docs.docker.com/config/pruning
+
+https://docs.docker.com/engine/reference/commandline/image_prune/#description
+
+> 虚悬镜像(dangling image) ，未标记且不被任何容器引用的镜像
+
+```
+docker image prune
+docker images -f dangling=true
+```
+
 #### 容器相关命令
 
 ##### 列出本机正在运行的容器
@@ -267,6 +286,8 @@ docker exec [-itd] [容器名称] 命令
 -i  交互模式，即使没有附加-i，STDIN(标准输入)也保持打开 
 
 docker exec -it 5571842d72e8 /bin/bash
+docker exec -it 5571842d72e8 /bin/sh
+docker exec -it 5571842d72e8 /bash
 ```
 
 ##### 启动容器
@@ -292,6 +313,12 @@ docker cp 5571842d72e8:/usr/share/jitsi-meet ./libs
 
 ```
 docker commit 5571842d72e8 jitsi/web:2.0.7577
+```
+
+##### 查看日志
+
+```
+docker logs -f 5571842d72e8 --tail=200
 ```
 
 ## Dockerfile构建镜像
@@ -375,6 +402,8 @@ Docker Registry——本地私有化仓库
 
 k8s
 
+harbor
+
 ## Docker网络管理
 
 容器处在相同网络下才能进行通信。
@@ -413,6 +442,118 @@ Docker源生的集群管理工具
 
 ## Docker数据管理
 
+## docker-compose
+
+### docker-compose.yml参数
+
+```
+version: '3.5'
+
+services:
+  fs-usercenter:
+    image: fs-usercenter:latest      //镜像名称
+    network_mode: host               //网络模式，默认bridge
+    hostname: fs-usercenter          //
+    container_name: fs-usercenter    // 容器名称
+    privileged: true                 // 给容器root权限
+    restart: always                  // 自动重启
+    volumes:                         // 卷映射，持久化数据
+      - ./data/config:/work/fs-usercenter/config
+      - ./data/logs:/work/fs-usercenter/logs
+    env_file:                        // 设置环境变量文件
+      - ../../flyshare.env
+    environment:                     // 设置环境变量
+      - TZ=Asia/Shanghai
+      - JAVA_OPTS=-Xms256m -Xmx1g
+      - nacos.config.server-addr=127.0.0.1:5080
+      - nacos.config.username=nacos-api
+      - nacos.config.password=kBfTvU4uiPGA7KV0JB/enQ==
+      - nacos.config.remote-first=true
+      - nacos.config.bootstrap.logEnable=true
+      - LOG_HOME=/work/fs-usercenter/logs
+```
+
+### 环境变量
+
+#### 容器引用变量的优先级
+
+```
+Compose file
+Shell environment variables
+Environment file
+Dockerfile
+Variable is not defined
+```
+
+1. **compose file中只能引用 Shell环境变量、`.env` 环境文件**。引用不到Dockerfile中定义的变量，也引用不了env_file设置的文件中变量。
+2. compose file中的变量是不能互相引用的。即设置一个变量时，引用内部的一个变量则结果是空值。
+3. 很多默认值，则可以使用 .env 环境变量文件解决。
+4. /etc/profile等变量并不会对容器生效。
+
+#### 环境变量的设置方式
+
+##### compose file
+
+```
+version: '2'
+services:
+  data-tag-biz:
+    image: 192.168.1.XX/xxxx/data-standard-biz:9.0
+    network_mode: "host"
+    restart: always
+    ports:
+      - 10015:9015
+    environment:
+      - NACOS-HOST=${NACOS_HOST}
+      - SW_NAME=test:${SV_NAME}
+      - SW_SERVICES=192.168.1.XX:11800
+      - TRACK=-javaagent:/opt/skywalking-agent.jar
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC
+    container_name: data-standard-biz-9
+```
+
+##### shell环境变量
+
+```
+export SV_NAME=data-standard-biz
+```
+
+##### 环境变量文件
+
+docker原生命令
+
+```
+docker run --env-file=web-variables.env
+```
+
+compose file中指定
+
+```
+version: '3'
+services:
+  data-tag-biz:
+    env_file:
+      - ../file.env   #相对于docker-compose.yml文件的位置。
+    environment:
+      - SV_NAME=data-standard-biz
+      - NACOS-HOST=${NACOS_HOST}
+      - SW_NAME=test:${SV_NAME}
+      - SW_SERVICES=192.168.1.XX:11800
+      - TRACK=-javaagent:/opt/skywalking-agent.jar
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC
+    container_name: data-standard-biz-9
+```
+
+.env文件
+
+在docker-compose.yml同级目录中加入`.env`文件，则可以设置docker-compose环境变量的默认值，可以在docker-compose中引用到的。
+
+### 查看当前配置
+
+```
+ docker-compose config
+```
+
 ## Docker Desktop
 
 ### 设置镜像仓库
@@ -424,3 +565,77 @@ Docker源生的集群管理工具
 ```
 
 ### 设置代理
+
+## Docker离线安装
+
+[下载安装包](https://download.docker.com/linux/static/stable/x86_64/)
+
+```
+tar -zxvf docker-20.10.16.tgz
+cp -p docker/* /usr/bin
+```
+
+注册为系统服务
+
+```
+vim /usr/lib/systemd/system/docker.service
+```
+
+```
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.com
+After=network.target docker.socket
+[Service]
+Type=notify
+EnvironmentFile=-/run/flannel/docker
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/bin/dockerd \
+                -H tcp://0.0.0.0:4243 \
+                -H unix:///var/run/docker.sock \
+                --selinux-enabled=false \
+                --log-opt max-size=1g
+ExecReload=/bin/kill -s HUP $MAINPID
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+#TasksMax=infinity
+TimeoutStartSec=0
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+```
+
+设置开机启动
+
+```
+systemctl enable docker
+```
+
+## 常见问题
+
+### 容器内无法访问外部网络
+
+```
+查看转发
+firewall-cmd --query-masquerade
+
+查看配置
+sysctl -p
+
+配置转发
+vi /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+
+开启转发
+firewall-cmd --add-masquerade --permanent
+```
+

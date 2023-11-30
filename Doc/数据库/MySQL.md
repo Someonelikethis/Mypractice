@@ -2,6 +2,30 @@
 
 ## 常用命令
 
+### 登录及使用
+
+```
+登录
+mysql -h 127.0.0.1 -u root -p
+
+查看所有可见数据库
+show databases;
+
+选中数据库
+use fschat;
+
+查看所有可见表(包括视图)
+show tables;
+
+获取用户信息
+SELECT User, Host FROM mysql.user;
+
+查看某数据库所有视图
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.VIEWS
+WHERE TABLE_SCHEMA = 'your_database_name';
+```
+
 ### 用户和授权
 
 #### 创建用户
@@ -68,6 +92,27 @@ REVOKE privilege ON dbname.tablename FROM 'username'@'host';
 
 eg:
 revoke all on *.* to 'fschat'@'%';
+```
+
+## 读取当前时间
+
+```
+select now()
+select sysdate()
+```
+
+## 查询数据库版本
+
+```
+select version()
+```
+
+## 授权并创建视图
+
+```
+grant select on sys_dept to qyyp;
+
+create view sys_user as select * from fschat.sys_user;
 ```
 
 ## 问题解决记录

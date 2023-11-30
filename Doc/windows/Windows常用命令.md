@@ -19,3 +19,18 @@ netstat -ano|findstr "8081"
 tasklist|findstr "9088"
 ```
 
+## 域名解析
+
+```
+域名解析判断
+nslookup baidu.com
+
+cname解析判断
+nslookup
+set type=cname
+[输入cname值]_B289519E599FA48911123F1D945EE493.suban1.cqxx.com
+```
+
+## 查看文件MD5、SHA值
+
+`certutil -hashfile D:\xxx.txt`
