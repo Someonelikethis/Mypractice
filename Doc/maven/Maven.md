@@ -231,6 +231,16 @@ https://maven.apache.org/ref/3.8.6/maven-model/maven.html
 >
 > pre-site—>site—>post-site—>site-deploy
 
+### install
+
+```
+mvn install // 编译项目->运行测试->打包->安装到本地仓库
+注：对于同一个依赖，本地仓库优先于远程仓库，只有当本地仓库没有时才会从远程仓库下载
+
+mvn clean install -U  // 强制 Maven 更新依赖，即使本地仓库中已有
+注：本地仓库优先可以提高构建的速度，并且减轻远程仓库的负担
+```
+
 ## 仓库
 
 > 用于存放项目所需要的jar包，多个项目共享一个仓库里的相同jar包
