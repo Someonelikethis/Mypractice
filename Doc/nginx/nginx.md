@@ -66,10 +66,10 @@ server {
 	ssl_certificate_key /etc/ssl/suban.cqxx.com.pem;
 	ssl_session_timeout 5m;
 	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-	ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+	ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-RC4-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:RC4-SHA:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!DSS:!PKS:!RC4;
 	ssl_prefer_server_ciphers on;
 	charset UTF-8;
-	client_max_body_size 1000M; // 单次请求的body最大大小
+	client_max_body_size 1000M; # 单次请求的body最大大小
 	
 	location / {
 		root /usr/local/www;
@@ -77,6 +77,36 @@ server {
 	}
 	location /uc-api {
 		proxy_pass http://localhost:8080;
+		proxy_set_header Host $host:$server_port;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto "https";
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_redirect http:// https://;   # http强制转https
+        proxy_set_header X-Xss-Protection 1;
+        proxy_http_version 1.1;  #  websocket配置 
+        proxy_set_header Upgrade $http_upgrade;  #  websocket配置 
+        proxy_set_header Connection "upgrade";  #  websocket配置 
+	}
+}
+```
+
+#### stream配置ssl
+
+```
+最外层->
+stream {
+	server {
+		listen 19006;
+		proxy_connect_timeout 800s;
+		proxy_timeout 24h;
+		proxy_pass localhost:7205;
+	}
+	server {
+		listen 19004;
+		proxy_connect_timeout 800s;
+		proxy_timeout 24h;
+		proxy_pass 10.78.2.92:7201;
 	}
 }
 ```
@@ -152,3 +182,4 @@ location  /api/ {
 转发地址：`http://127.0.0.1:8000/api/test`
 
 注：`/api/`和`/api`区别是影响路径的匹配规则，例如`/apiUC`可以被`/api`匹配到，不能被`/api/`匹配到
+

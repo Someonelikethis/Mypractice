@@ -19,6 +19,7 @@ HELP.md
 *.iml
 *.ipr
 /log
+.fastRequest
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

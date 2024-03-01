@@ -582,3 +582,15 @@ B 是 A 的直接依赖，C 是 A 的间接依赖，根据 Maven 的依赖传递
 
 ### [依赖管理（Dependency management）](#dependencyManagement)
 
+## 发布jar包到maven仓库
+
+```
+mvn deploy:deploy-file -DgroupId=dingtalk-sdk-java -DartifactId=taobao-sdk-java-source -Dversion=1.0 -Dpackaging=jar -Dfile=./taobao-sdk-java-source-1.0.jar -DgeneratePom=true -Durl=https://git.wsb360.com/api/v4/projects/32/packages/maven -DrepositoryId=gitlab-fschat -s settings.xml
+
+mvn deploy:deploy-file -DgroupId=dingtalk-sdk-java -DartifactId=taobao-sdk-java -Dversion=1.0 -Dpackaging=jar -Dfile=./taobao-sdk-java-1.0.jar -DgeneratePom=true -Durl=https://git.wsb360.com/api/v4/projects/32/packages/maven -DrepositoryId=gitlab-fschat -s settings.xml
+
+mvn deploy:deploy-file -DgroupId=com.dm -DartifactId=DmJdbcDriver18 -Dversion=1.8.0 -Dpackaging=jar -Dfile=./DmJdbcDriver18-1.8.0.jar -DgeneratePom=true -Durl=https://git.wsb360.com/api/v4/projects/32/packages/maven -DrepositoryId=gitlab-fschat -s settings.xml
+
+mvn deploy:deploy-file -DgroupId=com.kingbase8 -DartifactId=kingbase8-jdbc -Dversion=2.0 -Dpackaging=jar -Dfile=./kingbase8-jdbc-2.0.jar -DgeneratePom=true -Durl=https://git.wsb360.com/api/v4/projects/32/packages/maven -DrepositoryId=gitlab-fschat -s settings.xml
+```
+

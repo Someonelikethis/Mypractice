@@ -365,6 +365,12 @@ firewall-cmd --permanent --remove-rich-rule="rule family='ipv4' source address='
 firewall-cmd --permanent --remove-rich-rule="rule family='ipv4' source address='192.168.3.0/24' port protocol='tcp' port='80' accept"
 ```
 
+移除端口
+
+```
+firewall-cmd --zone=public --permanent --remove-port=9080/tcp
+```
+
 通过修改文件来控制
 
 ```
