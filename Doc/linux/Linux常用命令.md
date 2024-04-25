@@ -400,6 +400,24 @@ firewall-cmd --zone=public --permanent --remove-port=9080/tcp
 </zone>
 ```
 
+## iptables
+
+```
+查看指定chain
+iptables -L INPUT
+注意顺序由上往下，优先级从高到低
+
+插入规则到指定行
+iptables -I INPUT 1 -s 192.19.0.0/24 -p tcp --dport 3306 -j ACCEPT
+-I表示插入，-A表示追加（到末尾），-D表示删除
+INPUT是chain名称，表示插入或追加到哪个chain
+插入时，1表示插入到第一行
+-s指定source（源地址），可以指定ip或网段，192.19.0.0/24是网段
+-p指定protocol，指定通信协议，tcp、udp等
+--dport指定端口
+ACCEPT表示接收数据包，DROP表示丢弃数据包
+```
+
 ## 查看软件路径
 
 ```shell

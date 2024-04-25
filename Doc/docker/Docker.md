@@ -249,6 +249,12 @@ docker image prune
 docker images -f dangling=true
 ```
 
+##### 获取镜像具体创建时间
+
+```
+docker inspect --format='{{.Created}}' <image_name_or_id>
+```
+
 #### 容器相关命令
 
 ##### 列出本机正在运行的容器
