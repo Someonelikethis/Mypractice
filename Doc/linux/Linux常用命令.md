@@ -290,6 +290,10 @@ $ dpkg -S keyword
 ```
 # 读取链接地址
 readlink -f ds-example.conf
+删除
+unlink ds-example.conf
+添加软连接
+ln -s /usr/bin/python2.7 /usr/bin/python
 ```
 
 ## 防火墙
@@ -396,3 +400,39 @@ firewall-cmd --zone=public --permanent --remove-port=9080/tcp
 </zone>
 ```
 
+## 查看软件路径
+
+```shell
+which python
+```
+
+## 查看显卡占用
+
+```shell
+nvidia-smi
+```
+
+## ssh免密登录
+
+1. **主控机生成 SSH 密钥对**：如果您还没有 SSH 密钥对，请使用以下命令生成一对新的密钥。在生成密钥对时，如果提示您输入密码，请留空，直接按回车键。
+
+   ```
+   ssh-keygen -t rsa -b 4096
+   ```
+
+2. **将公钥添加到目标主机的授权密钥列表**：将您生成的公钥 `~/.ssh/id_rsa.pub` 添加到目标主机的 `~/.ssh/authorized_keys` 文件中。您可以使用 `ssh-copy-id` 命令将公钥复制到目标主机上：
+
+   ```
+   ssh-copy-id username@hostname
+   -v 查看详细信息
+   ```
+
+   或者手动将公钥内容添加到目标主机的 `~/.ssh/authorized_keys` 文件中。
+
+3. **测试免密登录**：现在，您应该可以通过以下命令无需输入密码登录到目标主机：
+
+   ```
+   ssh username@hostname
+   ```
+
+6请确保目标主机上的 `~/.ssh/authorized_keys` 文件具有正确的权限（应为 `600` 或 `644`）以及目录 `~/.ssh` 的权限为 `700`。

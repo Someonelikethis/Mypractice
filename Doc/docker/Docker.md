@@ -554,6 +554,12 @@ services:
  docker-compose config
 ```
 
+### 启动指定服务
+
+```
+docker-compose up -d <service_name>
+```
+
 ## Docker Desktop
 
 ### 设置镜像仓库
@@ -639,3 +645,40 @@ net.ipv4.ip_forward = 1
 firewall-cmd --add-masquerade --permanent
 ```
 
+### 无权限
+
+```
+permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
+```
+
+这个错误通常表示当前用户没有权限访问 Docker 守护进程。要解决这个问题，您可以尝试以下几种方法：
+
+1. **将用户添加到 Docker 用户组**：将当前用户添加到 Docker 用户组中，以便无需使用 sudo 权限即可运行 Docker 命令。请注意，这可能需要重新登录才能生效。首先，确保 Docker 用户组存在：
+
+   ```
+   sudo groupadd docker
+   ```
+
+   然后将当前用户添加到 Docker 用户组中：
+
+   ```
+   sudo usermod -aG docker $USER
+   ```
+
+   最后，注销并重新登录。
+
+2. **检查 Docker 守护进程的权限**：确保 `/var/run/docker.sock` 文件的权限正确。它应该属于 `docker` 组，并且权限为 `660`。您可以使用以下命令更正权限：
+
+   ```
+   sudo chown root:docker /var/run/docker.sock
+   sudo chmod 660 /var/run/docker.sock
+   ```
+
+3. 限制容器仅本机/宿主机访问
+
+   ```
+       ports:
+         - '127.0.0.1:50000:5000'
+   ```
+
+4. 
