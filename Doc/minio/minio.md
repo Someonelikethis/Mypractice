@@ -8,6 +8,8 @@ mc ls minio
 
 mc ls minio/chat
 
+mc mirror --overwrite SOURCE TARGET
+
 mc mirror --overwrite minio/chat minio/ecd
 
 mc mirror --overwrite minio/ecd s3/fss-prd/ECD

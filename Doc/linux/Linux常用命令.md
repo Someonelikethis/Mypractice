@@ -138,8 +138,11 @@ more /etc/passwd
 ```
 // 下载文件
 curl url -O
+// 下载文件指定名称
+curl url -o text.txt
 // 忽略证书
 curl url --insecure
+curl curl -k
 // 指定方法
 curl url -X POST
 // 添加请求头
@@ -149,6 +152,9 @@ curl url -X POST -H "Accept:application/json" -H "Content-Type:application/json"
 "password": "xxx",
 "username": "xxx"
 }'
+// 设置代理
+curl url -x http://proxy-server:port
+注：对于复杂url需要添加""
 ```
 
 ## 执行多条shell命令
@@ -197,10 +203,22 @@ free
 top
 ```
 
+## 添加用户账号
+
+```
+useradd -m <username>
+```
+
 ## 修改用户账号
 
 ```
 passwd <username>
+```
+
+### 添加用户到指定组
+
+```
+usermod -aG <goroupname> <username>
 ```
 
 ## 解锁用户密码锁定
@@ -453,4 +471,16 @@ nvidia-smi
    ssh username@hostname
    ```
 
-6请确保目标主机上的 `~/.ssh/authorized_keys` 文件具有正确的权限（应为 `600` 或 `644`）以及目录 `~/.ssh` 的权限为 `700`。
+请确保目标主机上的 `~/.ssh/authorized_keys` 文件具有正确的权限（应为 `600` 或 `644`）以及目录 `~/.ssh` 的权限为 `700`。
+
+## 定时任务
+
+```
+# 查看任务
+crontab -l
+# 编辑当前用户crontab文件
+crontab -e
+# 查看执行任务
+cd /var/log/
+less cron
+```
