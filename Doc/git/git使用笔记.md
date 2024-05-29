@@ -98,3 +98,9 @@ build: 打包
 ci: 持续集成
 ```
 
+#### 本地分支关联远程
+
+```
+git branch --set-upstream-to=origin/develop develop
+```
+
